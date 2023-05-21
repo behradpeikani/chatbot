@@ -3,7 +3,12 @@
 
 {% block content %}
 
-</br></br></br>
+{% if question %}
+	</br>
+	<h3>Question: {{ question }}</h3>
+{% endif %}
+
+</br>
 <div class="card">
   <div class="card-header">
     ChatGPT Response
@@ -15,9 +20,10 @@
 
 </br></br></br>
 
-<form>
+<form method="post" action="{% url 'home' %}">
+	{% csrf_token %}
   <div class="mb-3">
-    <input type="text" class="form-control" placeholder="Ask ChatGPT...">
+    <input type="text" class="form-control" name="question" placeholder="Ask ChatGPT...">
   </div>
   <button type="submit" class="btn btn-dark">Submit</button>
 </form>
