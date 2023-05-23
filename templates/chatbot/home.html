@@ -15,19 +15,35 @@
   </div>
   <div class="card-body">
     {% if response %}
-        {{ response }}
+        {{ past_responses|safe }}
     {% endif %}
   </div>
 </div>
 
 </br></br></br>
 
+{% if past_responses %}
 <form method="post" action="{% url 'home' %}">
-	{% csrf_token %}
+  {% csrf_token %}
+  <div class="mb-3">
+    <input type="hidden" name="past_responses" value="{{ past_responses }}">
+  </div>
   <div class="mb-3">
     <input type="text" class="form-control" name="question" placeholder="Ask ChatGPT...">
   </div>
   <button type="submit" class="btn btn-dark">Submit</button>
 </form>
+{% else %}
+<form method="post" action="{% url 'home' %}">
+	{% csrf_token %}
+  <div class="mb-3">
+    <input type="hidden" name="past_responses" value="{{ skmvosno }}">
+  </div>
+  <div class="mb-3">
+    <input type="text" class="form-control" name="question" placeholder="Ask ChatGPT...">
+  </div>
+  <button type="submit" class="btn btn-dark">Submit</button>
+</form>
+{% endif %}
 
 {% endblock %}
