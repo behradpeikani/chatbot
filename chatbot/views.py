@@ -4,10 +4,11 @@ import openai
 
 # Homepage View
 def home(request):
-	# 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
+	question = ""
+	response = ""
+
 	if request.method == 'POST':
-		question = request.POST.get('question')
-		return render(request, 'chatbot/home.html', {"question": question})	
+		question = request.POST.get('question')	
 
 		# Openai API 
 		openai.api_key = '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'
@@ -22,4 +23,11 @@ def home(request):
 			presence_penalty=0.0
 			)
 
-	return render(request, 'chatbot/home.html', {"question": question})
+		# parse the response
+		response = (response["choices"][0]["text"]).strip()
+
+		return render(request, 'chatbot/home.html', {"question": question, 
+		"response": response})
+
+	return render(request, 'chatbot/home.html', {"question": question, 
+		"response": response})
