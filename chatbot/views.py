@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 import openai
 from .models import History
+from django.contrib.paginator import Paginator
 
 
 # Homepage View
@@ -51,8 +52,15 @@ def home(request):
 		"response": response, "past_responses": past_responses})
 
 def history_view(request):
+	# set up pagination
+	p = Paginator(History.objects.all(), 10)
+	page = request.GET.get('page')
+	pages = p.get_page(page)
+
+	# queried the database
 	history = History.objects.all()
-	return render(request, 'chatbot/history.html', {"history": history})
+	return render(request, 'chatbot/history.html', {"history": history, 
+		"pages": pages})
 
 def delete_record(request, record_id):
 	record = History.objects.get(id=record_id)
