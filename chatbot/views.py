@@ -44,3 +44,7 @@ def home(request):
 
 	return render(request, 'chatbot/home.html', {"question": question, 
 		"response": response, "past_responses": past_responses})
+
+def history_view(request):
+	history = History.objects.all()
+	return render(request, 'chatbot/history.html', {"history": history})
