@@ -7,9 +7,10 @@
 {% if history %}
 
 	{% for obj in history %}
-
+		</br></br>
 		<strong>{{ obj.question }}</strong>
 		<p>{{ obj.answer }}</p>
+		<a href="{% url 'delete-record' obj.id %}" class="btn btn-outline-secondary btn-sm">Delete</a></br>
 
 	{% endfor %}
 

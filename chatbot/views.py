@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 import openai
 from .models import History
 
@@ -48,3 +49,9 @@ def home(request):
 def history_view(request):
 	history = History.objects.all()
 	return render(request, 'chatbot/history.html', {"history": history})
+
+def delete_record(request, record_id):
+	record = History.objects.get(id=record_id)
+	record.delete()
+	messages.success(request, 'The record has been deleted!')
+	return redirect('history-view')
